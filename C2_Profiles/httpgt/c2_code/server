@@ -66,7 +66,7 @@ async def agent_message(request, **kwargs):
             #resp = await MythicRPC().execute("create_event_message", message=msg.response, warning=False)
             #msg = await MythicRPC().execute("create_decrypted_message", message=msg.response, c2_profile_name="http")
             #resp = await MythicRPC().execute("create_event_message", message=msg.response, warning=False)
-            async with session.get(config['mythic_address'], data=urllib.parse.unquote(request.query_string[2:]) ,  ssl=False, headers={"Mythic": "httpgt", **request.headers, **forwarded_headers}) as resp:
+            async with session.post(config['mythic_address'], data=urllib.parse.unquote(request.query_string[2:]) ,  ssl=False, headers={"Mythic": "httpgt", **request.headers, **forwarded_headers}) as resp:
                 return raw(await resp.read(), status=resp.status, headers=config[request.app.name]['headers'])
         else:
             # manipulate the request if needed
